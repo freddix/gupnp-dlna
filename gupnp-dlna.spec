@@ -1,11 +1,11 @@
 Summary:	Library for creating UPnP devices and control points
 Name:		gupnp-dlna
-Version:	0.8.0
-Release:	2
+Version:	0.9.4
+Release:	1
 License:	LGPL v2
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gupnp-dlna/0.8/%{name}-%{version}.tar.xz
-# Source0-md5:	84fc9815c13fa7b6cfc15b9d6ce00415
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gupnp-dlna/0.9/%{name}-%{version}.tar.xz
+# Source0-md5:	f93665e535a512e4d515a86311435cb6
 URL:		http://www.gupnp.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -16,6 +16,8 @@ BuildRequires:	gupnp-devel
 BuildRequires:	libtool
 BuildRequires:	pkg-config
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		apiver	2.0
 
 %description
 GUPnP is an object-oriented open source framework for creating UPnP
@@ -57,8 +59,11 @@ API and internal documentation for gupnp-dlna library.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -69,24 +74,28 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
-%attr(755,root,root) %{_bindir}/gupnp-dlna-info-1.1
-%attr(755,root,root) %{_bindir}/gupnp-dlna-ls-profiles-1.1
-%attr(755,root,root) %ghost %{_libdir}/libgupnp-dlna-1.1.so.?
-%attr(755,root,root) %{_libdir}/libgupnp-dlna-1.1.so.*.*.*
+%attr(755,root,root) %{_bindir}/gupnp-dlna-info-%{apiver}
+%attr(755,root,root) %{_bindir}/gupnp-dlna-ls-profiles-%{apiver}
+%attr(755,root,root) %ghost %{_libdir}/libgupnp-dlna-%{apiver}.so.?
+%attr(755,root,root) %ghost %{_libdir}/libgupnp-dlna-gst-%{apiver}.so.?
+%attr(755,root,root) %{_libdir}/libgupnp-dlna-%{apiver}.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgupnp-dlna-gst-%{apiver}.so.*.*.*
 %{_libdir}/girepository-1.0/*.typelib
-%{_datadir}/gupnp-dlna
+%{_datadir}/gupnp-dlna-%{apiver}
+
+%dir %{_libdir}/gupnp-dlna
+%attr(755,root,root) %{_libdir}/gupnp-dlna/libgstreamer.so
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgupnp-dlna-1.1.so
-%{_libdir}/libgupnp-dlna-1.1.la
-%{_datadir}/gir-1.0/GUPnPDLNA-1.1.gir
-%{_datadir}/vala/vapi/gupnp-dlna-1.1.deps
-%{_datadir}/vala/vapi/gupnp-dlna-1.1.vapi
-%{_includedir}/gupnp-dlna-1.1
-%{_pkgconfigdir}/gupnp-dlna-1.1.pc
+%attr(755,root,root) %{_libdir}/*.so
+%{_datadir}/gir-1.0/*.gir
+%{_datadir}/vala/vapi/*.deps
+%{_datadir}/vala/vapi/*.vapi
+%{_includedir}/gupnp-dlna-%{apiver}
+%{_pkgconfigdir}/*.pc
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/gupnp-dlna
+%{_gtkdocdir}/gupnp-dlna*
 
