@@ -1,18 +1,18 @@
 Summary:	Library for creating UPnP devices and control points
 Name:		gupnp-dlna
-Version:	0.9.5
+Version:	0.10.2
 Release:	1
 License:	LGPL v2
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gupnp-dlna/0.9/%{name}-%{version}.tar.xz
-# Source0-md5:	b0c9e5e6edc5ca6fe854bc53560431bf
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gupnp-dlna/0.10/%{name}-%{version}.tar.xz
+# Source0-md5:	091f1ef019e0777f4409434018d3b3f3
 URL:		http://www.gupnp.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gstreamer-plugins-base-devel
 BuildRequires:	gtk-doc
-BuildRequires:	gupnp-devel
+BuildRequires:	gupnp-devel >= 0.20
 BuildRequires:	libtool
 BuildRequires:	pkg-config
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
